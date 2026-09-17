@@ -1,1 +1,4 @@
-aiogram>=3,<4
+__pycache__/
+*.pyc
+blockdrop.db
+.env
