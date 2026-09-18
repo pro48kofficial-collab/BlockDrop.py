@@ -22,7 +22,7 @@ from aiogram.fsm.storage.memory import MemoryStorage
 # ============================================================
 # CONFIG
 # ============================================================
-BOT_TOKEN = "PASTE_YOUR_BOT_TOKEN_HERE"
+BOT_TOKEN = "8939970989:AAH9RBhxduGPhbLZ3HxpaO_YT1jDgZ7G5Fc"
 
 # Put your Telegram numeric ID here after using /tgid.
 ADMIN_IDS = {
