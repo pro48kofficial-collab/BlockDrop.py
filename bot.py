@@ -404,7 +404,7 @@ def menu_kb():
         ("👤 Профіль", "profile"), ("🏪 Магазин", "shop"),
         ("🎁 Бонус", "daily"), ("🏆 Топ", "top"),
         ("🎟️ Промокод", "promo_help"), ("🟡 Gold", "gold"),
-        ("📋 Завдання", "tasks"), ("🏪 Gold Market", "market"),
+        ("📋 Завдання", "tasks"),
         ("📊 Статистика", "stats"),
         ("🎃 Halloween", "halloween"),
     ]
