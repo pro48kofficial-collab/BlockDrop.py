@@ -618,6 +618,59 @@ async def promo(message:Message):
     if p['item_id'] and p['item_id'] in ITEMS: rewards.append(f"+{ITEMS[p['item_id']]['name']}")
     await message.answer("🎟️ <b>Промокод активовано!</b>\n\n"+"\n".join(rewards))
 
+from aiogram import F
+from aiogram.types import LabeledPrice, PreCheckoutQuery, Message
+
+STAR_PRICE = 15
+PREMIUM_ITEM_ID = "royal_blade"
+
+# Кнопка/обробник покупки
+@dp.callback_query(F.data == "buy_premium")
+async def buy_premium(call: CallbackQuery):
+    await call.message.answer_invoice(
+        title="⭐ Premium Item",
+        description="💎 Royal Blade — MYTHIC",
+        payload=f"premium:{call.from_user.id}:{PREMIUM_ITEM_ID}",
+        currency="XTR",
+        prices=[
+            LabeledPrice(
+                label="Premium Item",
+                amount=STAR_PRICE
+            )
+        ],
+    )
+    await call.answer()
+
+
+# Telegram питає: чи можна провести оплату?
+@dp.pre_checkout_query()
+async def process_pre_checkout(query: PreCheckoutQuery):
+    await query.answer(ok=True)
+
+
+# Оплата успішна
+@dp.message(F.successful_payment)
+async def successful_payment(message: Message):
+    payment = message.successful_payment
+
+    if not payment.invoice_payload.startswith("premium:"):
+        return
+
+    user_id = message.from_user.id
+
+    # Тут твоя функція додавання предмета в інвентар
+    add_item_to_inventory(
+        user_id=user_id,
+        item_id=PREMIUM_ITEM_ID
+    )
+
+    await message.answer(
+        "✅ Оплата успішна!\n\n"
+        "Ти отримав:\n"
+        "💎 Royal Blade\n"
+        "🔴 MYTHIC"
+    )
+
 @dp.message(Command("createpromo"))
 async def createpromo(message:Message):
     u=ensure_user(message.from_user); p=message.text.split()
